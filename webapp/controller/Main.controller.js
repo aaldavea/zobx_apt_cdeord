@@ -291,9 +291,29 @@ sap.ui.define([
 				});   
 			},
 			_saveReference: function(){
-				let oEntry = that.getView().getModel("localModel").getProperty("/Reference"); 
+				let oEntry = {}; 
 				let sUrl = "/Reference_OrderSet";  
 				let aMessageErros = [];
+				let aTokens = [];
+				let MultiInput = that.byId("MultiInput-Reference"); 
+				let oPropertyData;
+
+				if(MultiInput.getValue() !== ""){ 
+					oPropertyData = {
+						setID: MultiInput.getValue()
+					};
+					aTokens.push(oPropertyData); 
+				} 
+
+				for(var i in MultiInput.getTokens()){
+					let oProperty = MultiInput.getTokens()[i].mProperties.text; 
+					oPropertyData = {
+						SetID: oProperty
+					}
+					aTokens.push(oPropertyData);
+				} 
+
+				oEntry["SetIdMaterials"] = aTokens;
 
 				Utilities.validateForm(localModel, that, "SimpleForm-Reference");
 				aMessageErros = localModel.getProperty("/Message");	
@@ -305,9 +325,7 @@ sap.ui.define([
 					return;
 				}else{
 					localModel.setProperty("/bBtnError", false);
-				}  
-				debugger
-				return
+				}   
 				sap.ui.core.BusyIndicator.show(); 
 				Utilities.odata.create(oModel, sUrl, oEntry, function (oResult) {
 					let aResults = oResult.SetIdMaterials.results;
