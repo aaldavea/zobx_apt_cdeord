@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns:ui="sap.ui.table" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Dialog id="dlgTable" title="Data loaded from excel ({= ${localModel>/listaExcel}.length})" class="sapUiResponsiveMargin" contentWidth="53.1rem" contentHeight="13.6rem">
+        <content class="sapUiResponsiveMargin">
+            <ui:Table 
+                rows="{localModel>/listaExcel}"
+                selectionMode="None" 
+                enableColumnFreeze="true"
+                visibleRowCount="5">
+                <!-- <ui:extension>
+                    <OverflowToolbar style="Clear"> 
+                        <Title id="title1" text="Excel data list ({= ${localModel>/listaExcel}.length})"/>
+                        <ToolbarSpacer width=""/> 	 
+                    </OverflowToolbar>
+                </ui:extension> -->
+                <ui:columns>
+                    <ui:Column width="8rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.Plant}"/>
+                        <ui:template>
+                            <Text text="{localModel>Plant}" maxLines="1" textAlign="Initial" textDirection="Inherit"/>
+                        </ui:template>
+                    </ui:Column> 
+                    <ui:Column width="9rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.RsetMadID}" />
+                        <ui:template>
+                            <Text text="{localModel>RefSetMatId}" maxLines="1" wrapping="false" textAlign="Initial" textDirection="Inherit"/>
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="11rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.DecomOrderStaDate}" />
+                        <ui:template>
+                            <!-- <Text text="{path: 'localModel>OrderSet/DcomOrderStart', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'dd.MM.yyyy', UTC: true}}"/> -->
+                            <Text text="{localModel>DcomOrderStart}"/>  
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="11rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.DecomOrderEndDate}" />
+                        <ui:template>
+                            <!-- <Text text="{path: 'localModel>OrderSet/DcomOrderEnd', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'dd.MM.yyyy', UTC: true}}"/>  -->
+                            <Text text="{localModel>DcomOrderEnd}"/> 
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="13rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.NumberOrderSet}" />
+                        <ui:template>
+                            <Text text="{localModel>NumberOrderSet}"/> 
+                        </ui:template>
+                    </ui:Column>
+                </ui:columns>
+            </ui:Table>
+        </content>
+        <buttons>
+			<Button text="Save" width="4.5rem" type="Accept" press="_saveExcel"/>
+            <Button text="Close" width="4.5rem" type="Reject" press="onCerrarPopUp" app:id="dlgTable"/>
+		</buttons>   
+    </Dialog>
+</core:FragmentDefinition>

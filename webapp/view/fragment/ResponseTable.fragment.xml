@@ -1,0 +1,59 @@
+<core:FragmentDefinition xmlns:ui="sap.ui.table" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:l="sap.ui.layout">
+    <Dialog id="dlgResponseTable" title="Service response ({= ${localModel>/ResponseTable}.length})" class="sapUiResponsiveMargin" contentWidth="51rem" contentHeight="13.6rem">
+        <content>
+            <ui:Table
+                id="listaExcel"
+                rows="{localModel>/ResponseTable}"
+                selectionMode="None" 
+                enableColumnFreeze="true"
+                visibleRowCount="5">
+                <!-- <ui:extension>
+                    <OverflowToolbar style="Clear"> 
+                        <Title id="title1" text="Service data list ({= ${localModel>/ResponseTable}.length})"/>
+                        <ToolbarSpacer width=""/> 	 
+                    </OverflowToolbar>
+                </ui:extension> -->
+                <ui:columns> 
+                    <ui:Column width="8rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.Plant}"/>
+                        <ui:template>
+                            <!-- <l:HorizontalLayout class="sapUiContentPadding">
+                                <ObjectStatus icon="sap-icon://accept" state="Success"/> 
+                                <Text text="{localModel>Plant}" maxLines="1" textAlign="Initial" textDirection="Inherit"/>
+                            </l:HorizontalLayout> -->
+                            <Text text="{localModel>Plant}" maxLines="1" textAlign="Initial" textDirection="Inherit"/> 
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="8rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.OrdCreated}"/>
+                        <ui:template> 
+                            <Text text="{localModel>OrderCreated}" maxLines="1" textAlign="Initial" textDirection="Inherit"/> 
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="9rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.RsetMadID}" />
+                        <ui:template>
+                            <Text text="{localModel>RefSetMatId}" maxLines="1" wrapping="false" textAlign="Initial" textDirection="Inherit"/>
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="13rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.DecomOrderStaDate}" />
+                        <ui:template>
+                            <Text text="{path: 'localModel>DcomOrderStart', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'dd.MM.yyyy', UTC: true}}"/> 
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="13rem" hAlign="Center">
+                        <Label text="{i18n>Dlg.Label.DecomOrderEndDate}" />
+                        <ui:template>
+                            <Text text="{path: 'localModel>DcomOrderStart', type: 'sap.ui.model.type.DateTime', formatOptions: {pattern: 'dd.MM.yyyy', UTC: true}}"/> 
+                        </ui:template>
+                    </ui:Column>  
+                </ui:columns>
+            </ui:Table>
+        </content>
+        <beginButton>
+            <Button text="Close" type="Reject" press="onCerrarPopUp" app:id="dlgResponseTable"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,14 @@
+{  
+	"visibles": {
+		"SpForm-SingleSet": true,
+		"SpForm-MultipSet": false,
+		"SpForm-CrUpRefer": false
+	},
+	"SingleSet": {
+		"OrderSet": [{}]
+	},
+	"Reference": {
+		"SetIdMaterials": []
+	},
+	"bBtnError": false
+}

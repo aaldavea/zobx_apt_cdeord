@@ -1,0 +1,19 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table" xmlns:form="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout" xmlns:unified="sap.ui.unified">
+	<SelectDialog id="Dlg-Plant" noDataText="No Data Found" title="Selection Plant" cancel="_cancelDialog"
+		search="._searchPlant" confirm="._confirmDialog($event, 'ZCDS_PLANT_CDS', 'Plant', 'plant')" rememberSelections="true" multiSelect="false" 
+		items="{path: 'ZCDS_PLANT_CDS>/ZCDS_PLANT'}">
+		<!-- <ObjectListItem type="Active">			
+			<attributes>
+				<ObjectAttribute title="{i18n>ObjectListItem.ObjectAttribute.Title.Plant}" text="{ZCDS_PLANT_CDS>plant} - {ZCDS_PLANT_CDS>name}"></ObjectAttribute>	 
+			</attributes>
+		</ObjectListItem> -->
+		<StandardListItem 
+			title="{i18n>ObjectListItem.ObjectAttribute.Title.Plant}: {ZCDS_PLANT_CDS>plant}"
+			description="{i18n>ObjectListItem.ObjectAttribute.Title.Name}: {ZCDS_PLANT_CDS>name}"
+			icon="https://cdn-icons-png.flaticon.com/512/17/17468.png"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+	</SelectDialog>    
+</core:FragmentDefinition>

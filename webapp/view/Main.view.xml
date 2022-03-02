@@ -1,0 +1,128 @@
+<mvc:View
+    controllerName="com.sap.build.custom.zobx_apt_cdeord.controller.Main"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" 
+	xmlns:core="sap.ui.core"
+	xmlns:u="sap.ui.unified"
+>
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+						<VBox class="sapUiSmallMargin"> 
+							<f:SimpleForm editable="true" layout="GridLayout"
+								labelSpanXL="1" labelSpanL="1" labelSpanM="1"  labelSpanS="2" adjustLabelSpan="false" 
+								emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0"  
+								columnsXL="1" columnsL="1" columnsM="1"
+								singleContainerFullSize="false" visible="true" ariaLabelledBy="Title1" >
+								<f:content> 
+									<Label text="{i18n>Label.text.DecomissionOrder}"/>
+									<Select change="changeCombo" id="cdCombo" placeholder="Selection please"  width="35%" >
+										<items>
+											<core:Item key="1" text="{i18n>ComboBox.Item.CreateDeOrderSinglSet}"/>
+											<core:Item key="2" text="{i18n>ComboBox.Item.CreateDeOrdenMultiSet}"/>
+											<core:Item key="3" text="{i18n>ComboBox.Item.CreateUpdateReference}"/>
+										</items>
+									</Select>
+								</f:content>
+							</f:SimpleForm> 
+							<f:SimpleForm id="SimpleForm-SingleSet" editable="true" layout="ResponsiveGridLayout"
+								labelSpanXL="2" labelSpanL="2" labelSpanM="2"  labelSpanS="2" adjustLabelSpan="false" 
+								emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0"  
+								columnsXL="1" columnsL="1" columnsM="1"
+								singleContainerFullSize="false" visible="{localModel>/visibles/SpForm-SingleSet}" ariaLabelledBy="Title1" >
+								<f:content>
+									<Toolbar ariaLabelledBy="Title2">
+										<Title id="Title1" text="{i18n>SimpleForm.CreateDeOrderSinglSet}" level="H5" titleStyle="H5"/>
+										<ToolbarSpacer />
+									</Toolbar>
+										<Label text="{i18n>SimpleForm.Label.Plant}" required="true"/>
+										<Input id="inp-Plant" value="{localModel>/SingleSet/OrderSet/0/Plant}" width="34%" showValueHelp="true" valueHelpRequest="._openPlant"
+												showSuggestion="true" suggestionItems="{path: 'ZCDS_PLANT_CDS>/ZCDS_PLANT'}" change="changePlant" type="Number">
+												<suggestionItems>
+													<core:Item text="{ZCDS_PLANT_CDS>plant}"/> 
+												</suggestionItems>
+										</Input>
+										<Label text="{i18n>SimpleForm.Label.RsetMadID}" required="true"/>
+										<Input id="inp-RsetMadID" value="{localModel>/SingleSet/OrderSet/0/RefSetMatId}" width="34%" showValueHelp="true" valueHelpRequest="._openMaterials"
+												showSuggestion="true" suggestionItems="{localModel>/MATERIALS}" change="changeMaterial" liveChange="liveUpperCase">
+											<suggestionItems>
+													<core:Item text="{localModel>material}"/> 
+											</suggestionItems>
+										</Input>
+										<Label text="{i18n>SimpleForm.Label.DecomOrderStaDate}" required="true"/> 
+										<DateTimePicker id="DateTime-StartDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderStart}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" class="sapUiSmallMarginBottom"/>
+										<Label text="{i18n>SimpleForm.Label.DecomOrderEndDate}" required="true"/> 
+										<DateTimePicker id="DateTime-EndDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderEnd}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" class="sapUiSmallMarginBottom" />
+										<Label text="{i18n>SimpleForm.Label.NumberOfOrdeThSet}" required="true"/>
+										<Input id="inp-NumberOrder" width="34%" value="{localModel>/SingleSet/OrderSet/0/NumberOrderSet}" type="Number"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm id="SimpleForm-MultipleSet" editable="true" layout="ResponsiveGridLayout" ariaLabelledBy="Title1" 
+								labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="false"
+								emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0"
+								columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"
+								visible="{localModel>/visibles/SpForm-MultipSet}">
+								<f:content>
+									<Toolbar ariaLabelledBy="Title3">
+										<Title id="Title5" text="{i18n>SimpleForm.CreateDeOrdenMultiSet}" level="H5" titleStyle="H5"/>
+										<ToolbarSpacer />
+									</Toolbar>
+									<Label text="{i18n>SimpleForm.FileUploader.Upload}" required="true"/>
+									<u:FileUploader
+										id="File-FileUploader" 
+										tooltip="Enter the file"
+										uploadComplete="handleUploadComplete"
+										uploadStart="uploadStart"
+										change="handleValueChange"  
+										style="Emphasized" 
+										placeholder="Enter the file"
+										buttonText="Browse.."
+										fileType="xlsx,csv"/>
+								</f:content>
+							</f:SimpleForm>
+							<f:SimpleForm  id="SimpleForm-Reference" editable="true" layout="ResponsiveGridLayout" 
+								labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="2" adjustLabelSpan="true"
+								emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0"
+								columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"
+								visible="{localModel>/visibles/SpForm-CrUpRefer}" ariaLabelledBy="Title1" >
+								<f:content>
+									<Toolbar ariaLabelledBy="Title3">
+										<Title id="Title9" text="{i18n>SimpleForm.CreateUpdateReference}" level="H5" titleStyle="H5"/>
+										<ToolbarSpacer />
+									</Toolbar>
+									<Label text="{i18n>SimpleForm.FileUploader.CreUpdOrderSet}" required="true"/> 
+									<MultiInput id="MultiInput-Reference" width="36%" tokens="{localModel>/Reference/SetIdMaterials}"
+											valueHelpRequest="_openMultiMaterials" showValueHelp="true" showSuggestion="true" 
+											suggestionItems="{path: 'ZCDS_MATERIALS_CDS>/ZCDS_MATERIALS'}" change="changeMultiMaterial" liveChange="liveUpperCase"> 
+										<tokens>
+											<Token key="{localModel>SetID}" text="{localModel>SetID}" />
+										</tokens>
+										<suggestionItems>
+											<core:Item text="{ZCDS_MATERIALS_CDS>material}"/> 
+										</suggestionItems>
+									</MultiInput> 
+								</f:content>
+							</f:SimpleForm> 
+						</VBox> 
+					</content> 
+					<footer>
+						<OverflowToolbar>
+								<Button id="btn-Error" type="Negative" icon="sap-icon://message-error" visible="{localModel>/bBtnError}"
+										press="_pressError"/> 
+							<ToolbarSpacer/> 
+								<Button id="btn-SingleSet" text="Execute" type="Emphasized" visible="{localModel>/visibles/SpForm-SingleSet}" press="_saveSingleSet"/>
+								<Button id="btn-Reference" text="Execute" type="Emphasized" visible="{localModel>/visibles/SpForm-CrUpRefer}" press="_saveReference"/>
+								<Button id="btn-Clean" text="Clean" press="_clean"/>
+						</OverflowToolbar>
+					</footer>
+				</Page>
+				
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
