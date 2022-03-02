@@ -1,0 +1,12 @@
+{
+    "base": "./dist",
+    "conn_usestrictssl" : false,
+    "conn_server": "http://vheosds4ci.sap.atecspine.com:8000/",
+    "conn_client" : "210",
+    "conn_user": "AALVADE",
+    "conn_password": "SSol12345",
+    "abap_package": "ZFIORI",
+    "abap_bsp": "zobx_apt_cdeord",
+    "abap_bsp_text": "Create decomission order",
+    "abap_transport":"DS4K900951" 
+}
