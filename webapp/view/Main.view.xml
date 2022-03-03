@@ -55,11 +55,11 @@
 											</suggestionItems>
 										</Input>
 										<Label text="{i18n>SimpleForm.Label.DecomOrderStaDate}" required="true"/>  
-										<DateTimeInput id="DateTime-StartDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderStart}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter start date"/>
+										<DateTimeInput id="DateTime-StartDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderStart}" change="onValidateChange" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter start date"/>
 										<Label text="{i18n>SimpleForm.Label.DecomOrderEndDate}" required="true"/>  
-										<DateTimeInput id="DateTime-EndDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderEnd}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter end date"/>
+										<DateTimeInput id="DateTime-EndDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderEnd}" change="onValidateChange" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter end date"/>
 										<Label text="{i18n>SimpleForm.Label.NumberOfOrdeThSet}" required="true"/>
-										<Input id="inp-NumberOrder" width="34%" value="{localModel>/SingleSet/OrderSet/0/NumberOrderSet}" type="Number"/>
+										<Input id="inp-NumberOrder" width="34%" value="{localModel>/SingleSet/OrderSet/0/NumberOrderSet}" liveChange="onValidateChange" type="Number"/>
 								</f:content>
 							</f:SimpleForm>
 							<f:SimpleForm id="SimpleForm-MultipleSet" editable="true" layout="ResponsiveGridLayout" ariaLabelledBy="Title1" 

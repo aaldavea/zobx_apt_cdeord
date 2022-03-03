@@ -4,7 +4,7 @@ sap.ui.define([
 	"./Utilities"
 ], function (JSONModel, Fragment) {
 	"use strict";
-	
+	var startDate, endDate;
 	return { 
         odata: { 
             remove: function(oModel, oContext, fnSuccess, fnError){
@@ -129,6 +129,34 @@ sap.ui.define([
                     }
                     aMessages = aMessages.slice(1);
                 }
+
+				// if(oFormContainer instanceof sap.m.DateTimeInput){
+				// 	if(oFormContainer.getDateValue() !== null){
+						
+				// 		if(oFormContainer.getId().includes("DateTime-StartDate")){
+				// 			startDate = oFormContainer.getDateValue();
+				// 		} else if(oFormContainer.getId().includes("DateTime-EndDate")) {
+				// 			endDate = oFormContainer.getDateValue();
+				// 		}
+
+				// 		console.log(endDate);
+				// 		console.log(startDate);
+				// 		if(endDate < startDate){
+				// 				console.log("entro");
+				// 				aMessages.push({
+				// 					type: "Error",
+				// 					title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_4"),
+				// 					subtitle: "Start Date - End Date"
+				// 				});
+				// 		}
+				// 		if(startDate !== undefined && endDate !== undefined){
+							
+							
+				// 		}
+						
+				// 	}
+					
+                // } 
             });	
             
             if(!aForm[1].getValue() && FlagMaterial === "Materials"){
