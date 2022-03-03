@@ -300,7 +300,7 @@ sap.ui.define([
 
 				if(MultiInput.getValue() !== ""){ 
 					oPropertyData = {
-						setID: MultiInput.getValue()
+						SetID: MultiInput.getValue()
 					};
 					aTokens.push(oPropertyData); 
 				} 
@@ -328,11 +328,16 @@ sap.ui.define([
 				}   
 				sap.ui.core.BusyIndicator.show(); 
 				Utilities.odata.create(oModel, sUrl, oEntry, function (oResult) {
+
 					let aResults = oResult.SetIdMaterials.results;
+					that.byId("MultiInput-Reference").setValue();  
+					that.byId("MultiInput-Reference").setTokens([]);  
+					localModel.setProperty("/Reference/SetIdMaterials", []);  
+					
 					Utilities._showLog(that, aResults, "X"); 
-					localModel.setProperty("/Reference/SetIdMaterials", []);    
+
 				}, function (oError) {
-						MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("Message.Error.Description.MSG_ERR_EXCEL"));
+					MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("Message.Error.Description.MSG_ERR_2"));
 				});
 			},
 			_clean: function(){
@@ -352,10 +357,12 @@ sap.ui.define([
 				let sPlant = oEvent.getSource().getValue(); 
 				let oModel = that.getView().getModel("ZCDS_MATERIALS_CDS");
 				let sUrl = "/ZCDS_MATERIALS";
-				let oParameters = {}, oFilters = [];
+				let oParameters = {}; 
 
-				oParameters["$filter"] = "plant eq '" + sPlant + "'"
-
+				that.byId("inp-RsetMadID").setValue();
+				localModel.setProperty("/SingleSet/OrderSet/0/RefSetMatId", "");
+				
+				oParameters["$filter"] = "plant eq '" + sPlant + "'" 
 				Utilities.odata.read(oModel, sUrl, oParameters, function (oResult) { 
 					localModel.setProperty("/MATERIALS", oResult.results);
 				}, function(oError){

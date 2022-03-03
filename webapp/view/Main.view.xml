@@ -54,10 +54,10 @@
 													<core:Item text="{localModel>material}"/> 
 											</suggestionItems>
 										</Input>
-										<Label text="{i18n>SimpleForm.Label.DecomOrderStaDate}" required="true"/> 
-										<DateTimePicker id="DateTime-StartDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderStart}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" class="sapUiSmallMarginBottom"/>
-										<Label text="{i18n>SimpleForm.Label.DecomOrderEndDate}" required="true"/> 
-										<DateTimePicker id="DateTime-EndDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderEnd}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" class="sapUiSmallMarginBottom" />
+										<Label text="{i18n>SimpleForm.Label.DecomOrderStaDate}" required="true"/>  
+										<DateTimeInput id="DateTime-StartDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderStart}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter start date"/>
+										<Label text="{i18n>SimpleForm.Label.DecomOrderEndDate}" required="true"/>  
+										<DateTimeInput id="DateTime-EndDate" value="{localModel>/SingleSet/OrderSet/0/DcomOrderEnd}" valueFormat="yyyy-MM-ddTHH:mm:ss" width="34%" type="Date" placeholder="Enter end date"/>
 										<Label text="{i18n>SimpleForm.Label.NumberOfOrdeThSet}" required="true"/>
 										<Input id="inp-NumberOrder" width="34%" value="{localModel>/SingleSet/OrderSet/0/NumberOrderSet}" type="Number"/>
 								</f:content>

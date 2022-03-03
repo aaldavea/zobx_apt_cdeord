@@ -109,7 +109,7 @@ sap.ui.define([
                         });
                     }
                 }
-                if(oFormContainer instanceof sap.m.DateTimePicker){
+                if(oFormContainer instanceof sap.m.DateTimeInput){
                     if(oFormContainer.getDateValue() === null){
                         aMessages.push({
                             type: "Error",
@@ -139,8 +139,8 @@ sap.ui.define([
                 });
             }
             
-            if(aForm[7] !== undefined && aForm[5] !== undefined){
-                if(aForm[7].getDateValue() !== null && aForm[5].getDateValue() !== null){
+            if(aForm[7] !== undefined  && aForm[5] !== undefined){
+                if(aForm[7].getDateValue() !== null || aForm[7].getValue() !== '' && aForm[5].getDateValue() !== null || aForm[5].getValue() !== ''){
                     if(aForm[7].getDateValue() < aForm[5].getDateValue()){
                         aMessages.push({
                             type: "Error",
