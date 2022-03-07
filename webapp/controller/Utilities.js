@@ -5,185 +5,195 @@ sap.ui.define([
 ], function (JSONModel, Fragment) {
 	"use strict";
 	var startDate, endDate;
-	return { 
-        odata: { 
-            remove: function(oModel, oContext, fnSuccess, fnError){
-                sap.ui.core.BusyIndicator.show(0);
+	return {
+		odata: {
+			remove: function (oModel, oContext, fnSuccess, fnError) {
+				sap.ui.core.BusyIndicator.show(0);
 
-                oModel.remove(oContext.getPath(), {
-                    success: function(oResult){
-                        if(fnSuccess)
-                            fnSuccess(this);
-                    }.bind(oContext.getProperty()),
-                    error: function(oError){
-                        if(fnError)
-                            fnError(oError);
-                    }
-                })
-            },
-            create: function(oModel, sUrl, oEntry, fnSuccess, fnError){
-                sap.ui.core.BusyIndicator.show(0);
+				oModel.remove(oContext.getPath(), {
+					success: function (oResult) {
+						if (fnSuccess)
+							fnSuccess(this);
+					}.bind(oContext.getProperty()),
+					error: function (oError) {
+						if (fnError)
+							fnError(oError);
+					}
+				})
+			},
+			create: function (oModel, sUrl, oEntry, fnSuccess, fnError) {
+				sap.ui.core.BusyIndicator.show(0);
 
-                oModel.create(sUrl, oEntry, {
-                    success: function(oResult){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnSuccess)
-                            fnSuccess(oResult);                        
-                    },
-                    error: function(oError){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnError)
-                            fnError(oError);
-                    }
-                });
-            },
-            update: function(oModel, sUrl, oEntry, fnSuccess, fnError){
-                sap.ui.core.BusyIndicator.show(0);
+				oModel.create(sUrl, oEntry, {
+					success: function (oResult) {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnSuccess)
+							fnSuccess(oResult);
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnError)
+							fnError(oError);
+					}
+				});
+			},
+			update: function (oModel, sUrl, oEntry, fnSuccess, fnError) {
+				sap.ui.core.BusyIndicator.show(0);
 
-                oModel.update(sUrl, oEntry, {
-                    success: function(){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnSuccess)
-                            fnSuccess(oEntry);                        
-                    },
-                    error: function(oError){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnError)
-                            fnError(oError);
-                    }
-                });
-            },
-            read: function(oModel, sUrl, oParameters, fnSuccess, fnError){
-                sap.ui.core.BusyIndicator.show(0);
+				oModel.update(sUrl, oEntry, {
+					success: function () {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnSuccess)
+							fnSuccess(oEntry);
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnError)
+							fnError(oError);
+					}
+				});
+			},
+			read: function (oModel, sUrl, oParameters, fnSuccess, fnError) {
+				sap.ui.core.BusyIndicator.show(0);
 
-                oModel.read(sUrl, {
-                    urlParameters: oParameters instanceof Object ? oParameters : "",
-                    success: function(oResult){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnSuccess)
-                            fnSuccess(oResult);                        
-                    },
-                    error: function(oError){
-                        sap.ui.core.BusyIndicator.hide();
-                        if(fnError)
-                            fnError(oError);
-                    }
-                });
-            }
-        },
-		_openDialog: function(oView, sName, oController, fnAdicional){ 
+				oModel.read(sUrl, {
+					urlParameters: oParameters instanceof Object ? oParameters : "",
+					success: function (oResult) {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnSuccess)
+							fnSuccess(oResult);
+					},
+					error: function (oError) {
+						sap.ui.core.BusyIndicator.hide();
+						if (fnError)
+							fnError(oError);
+					}
+				});
+			}
+		},
+		_openDialog: function (oView, sName, oController, fnAdicional) {
 			Fragment.load({
 				name: sName,
 				controller: oController
-			}).then(function (oDialog) {		
+			}).then(function (oDialog) {
 				oView.addDependent(oDialog);
 				oDialog.open();
-                if(fnAdicional){
+				if (fnAdicional) {
 					fnAdicional(oDialog);
-				} 
+				}
 			});
 		},
-        formatDate: function(sDate){
-            let oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
+		formatDate: function (sDate) {
+			let oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
 				pattern: "yyyy-MM-ddTHH:mm:ss"
 			});
-            return oDateFormat.format(new Date(sDate));
-        },
-        validateForm: function(localModel, that, sForm, FlagMaterial){
-            let aMessages = [], oForm
-            var sNameForm = sForm;
-            var aForm = that.getView().byId(sNameForm).getContent().slice(1);
+			return oDateFormat.format(new Date(sDate));
+		},
+		validateForm: function (localModel, that, sForm, FlagMaterial) {
+			let aMessages = [], oForm
+			var sNameForm = sForm;
+			var aForm = that.getView().byId(sNameForm).getContent().slice(1);
 
-            oForm = that.getView().byId(sNameForm);
-            oForm.getContent().slice(1).forEach(function(oFormContainer, iFormElement){ 
-                
-                if(oFormContainer instanceof sap.m.Text){
-                    return true;
-                }
-                if(oFormContainer instanceof sap.m.Input){
-                    if(!oFormContainer.getValue()){
-                        aMessages.push({
-                            type: "Error",
-                            title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement-1].getText(), 
-                            subtitle: aForm[iFormElement-1].getText(), 
-                        });
-                    }
-                }
-                if(oFormContainer instanceof sap.m.DateTimeInput){
-                    if(oFormContainer.getDateValue() === null){
-                        aMessages.push({
-                            type: "Error",
-                            title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement-1].getText(),
-                            subtitle: aForm[iFormElement-1].getText()
-                        });
-                    }
-                }  
+			oForm = that.getView().byId(sNameForm);
+			oForm.getContent().slice(1).forEach(function (oFormContainer, iFormElement) {
 
-                if(oFormContainer instanceof sap.m.MultiInput){
-                    if(oFormContainer.getTokens().length === 0){
-                        aMessages.push({
-                            type: "Error",
-                            title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement-1].getText(),
-                            subtitle: aForm[iFormElement-1].getText()
-                        });
-                    }
-                    aMessages = aMessages.slice(1);
-                }
+				if (oFormContainer instanceof sap.m.Text) {
+					return true;
+				}
+				if (oFormContainer instanceof sap.m.Input) {
+					if (!oFormContainer.getValue()) {
+						aMessages.push({
+							type: "Error",
+							title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement - 1].getText(),
+							subtitle: aForm[iFormElement - 1].getText(),
+						});
+					}
+				}
+				if (oFormContainer instanceof sap.m.DateTimeInput) {
+					if (oFormContainer.getDateValue() === null) {
+						aMessages.push({
+							type: "Error",
+							title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement - 1].getText(),
+							subtitle: aForm[iFormElement - 1].getText()
+						});
+					}
+				}
 
-				// if(oFormContainer instanceof sap.m.DateTimeInput){
-				// 	if(oFormContainer.getDateValue() !== null){
-						
-				// 		if(oFormContainer.getId().includes("DateTime-StartDate")){
-				// 			startDate = oFormContainer.getDateValue();
-				// 		} else if(oFormContainer.getId().includes("DateTime-EndDate")) {
-				// 			endDate = oFormContainer.getDateValue();
-				// 		}
+				if (oFormContainer instanceof sap.m.MultiInput) {
+					if (oFormContainer.getTokens().length === 0) {
+						aMessages.push({
+							type: "Error",
+							title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_3") + " " + aForm[iFormElement - 1].getText(),
+							subtitle: aForm[iFormElement - 1].getText()
+						});
+					}
+					aMessages = aMessages.slice(1);
+				}
 
-				// 		console.log(endDate);
-				// 		console.log(startDate);
-				// 		if(endDate < startDate){
-				// 				console.log("entro");
-				// 				aMessages.push({
-				// 					type: "Error",
-				// 					title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_4"),
-				// 					subtitle: "Start Date - End Date"
-				// 				});
-				// 		}
-				// 		if(startDate !== undefined && endDate !== undefined){
-							
-							
-				// 		}
-						
-				// 	}
-					
-                // } 
-            });	
-            
-            if(!aForm[1].getValue() && FlagMaterial === "Materials"){
-                aMessages.push({
-                    type: "Error",
-                    title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_5"),
-                    subtitle: "Plant"
-                });
-            }
-            
-            if(aForm[7] !== undefined  && aForm[5] !== undefined){
-                if(aForm[7].getDateValue() !== null || aForm[7].getValue() !== '' && aForm[5].getDateValue() !== null || aForm[5].getValue() !== ''){
-                    if(aForm[7].getDateValue() < aForm[5].getDateValue()){
-                        aMessages.push({
-                            type: "Error",
-                            title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_4"),
-                            subtitle: "Start Date - End Date"
-                        });
-                    }
-                } 
-            }
+				if(oFormContainer instanceof sap.m.Input){
+					if(oFormContainer.getId().includes("inp-Plant")){
+						if(!oFormContainer.getValue() && FlagMaterial === "Materials"){
+							aMessages.push({
+								type: "Error",
+								title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_5"),
+								subtitle: "Plant"
+							});
+						}
+					}
+				}
 
-            
+				if (oFormContainer instanceof sap.m.DateTimeInput) {
+					if (oFormContainer.getDateValue() !== null) {
 
-            localModel.setProperty("/Message", aMessages); 
-        },
-        _showPopover: function(oController){
+						if (oFormContainer.getId().includes("DateTime-StartDate")) {
+							startDate = oFormContainer.getDateValue();
+						} else if (oFormContainer.getId().includes("DateTime-EndDate")) {
+							endDate = oFormContainer.getDateValue();
+						}
+						if (startDate !== undefined && endDate !== undefined) {
+							if (endDate < startDate) {
+								aMessages.push({
+									type: "Error",
+									title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_4"),
+									subtitle: "Start Date - End Date"
+								});
+							}
+							startDate = undefined;
+							endDate = undefined;
+						}
+
+
+					}
+
+				}
+			});
+
+			// if (!aForm[1].getValue() && FlagMaterial === "Materials") {
+			// 	console.log(aForm[1].getValue())
+			// 	aMessages.push({
+			// 		type: "Error",
+			// 		title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_5"),
+			// 		subtitle: "Plant"
+			// 	});
+			// }
+
+			// if(aForm[7] !== undefined  && aForm[5] !== undefined){
+			//     if(aForm[7].getDateValue() !== null || aForm[7].getValue() !== '' && aForm[5].getDateValue() !== null || aForm[5].getValue() !== ''){
+			//         if(aForm[7].getDateValue() < aForm[5].getDateValue()){
+			//             aMessages.push({
+			//                 type: "Error",
+			//                 title: that.getView().getModel("i18n").getResourceBundle().getText("Message.Required.MSG_WAR_4"),
+			//                 subtitle: "Start Date - End Date"
+			//             });
+			//         }
+			//     } 
+			// }
+
+
+
+			localModel.setProperty("/Message", aMessages);
+		},
+		_showPopover: function (oController) {
 			//var that = this;
 
 			oController.oMessagePopover = new sap.m.MessagePopover({
@@ -195,13 +205,13 @@ sap.ui.define([
 
 					if (oControl) {
 						oPage.scrollToElement(oControl.getDomRef(), 200, [0, -100]);
-						setTimeout(function(){
+						setTimeout(function () {
 							oControl.focus();
 						}, 300);
 					}
 				},
 				items: {
-					path:"localModel>/Message",
+					path: "localModel>/Message",
 					template: new sap.m.MessageItem({
 						title: "{localModel>title}",
 						subtitle: "{localModel>subtitle}",
@@ -216,7 +226,7 @@ sap.ui.define([
 
 			oController.getView().byId("btn-Error").addDependent(oController.oMessagePopover);
 		},
-        _showLog: function(that, aMessages, oDialog, fnAdicional){
+		_showLog: function (that, aMessages, oDialog, fnAdicional) {
 			that.oMessageView = new sap.m.MessageView({
 				showDetailsPageHeader: true,
 				items: {
@@ -242,36 +252,36 @@ sap.ui.define([
 					press: function (oEvt) {
 						that.oDialog.close();
 						sap.ui.core.BusyIndicator.hide();
-						if(oDialog){
+						if (oDialog) {
 							oDialog.close();
 						}
-						if(fnAdicional)
+						if (fnAdicional)
 							fnAdicional();
 					},
 					text: "Close"
 				}),
-                escapeHandler: function(oEvt){
-                    that.oDialog.close();
-                    sap.ui.core.BusyIndicator.hide();
-                    if(oDialog){
-                        oDialog.close();
-                    }
-                    if(fnAdicional)
-                        fnAdicional();
-                }
+				escapeHandler: function (oEvt) {
+					that.oDialog.close();
+					sap.ui.core.BusyIndicator.hide();
+					if (oDialog) {
+						oDialog.close();
+					}
+					if (fnAdicional)
+						fnAdicional();
+				}
 			});
 			that.getView().addDependent(that.oDialog);
 			that.oDialog.open();
-		}, 
-		_showLog: function (that, aMensajes, FlagReference) { 
+		},
+		_showLog: function (that, aMensajes, FlagReference) {
 
-            var aMessage = [];
-            for(var i in aMensajes){
-                aMessage.push({
-                    "Type": aMensajes[i].Status,
-                    "Message": aMensajes[i].Status === "Error" ? aMensajes[i].Message : FlagReference === "X" ? "The reference has been generated " + aMensajes[i].RefOrder + " with material " + aMensajes[i].SetID : "The order has been generated " + aMensajes[i].OrderCreated + " with material " + aMensajes[i].RefSetMatId + " and plant " + aMensajes[i].Plant 
-                });
-            }
+			var aMessage = [];
+			for (var i in aMensajes) {
+				aMessage.push({
+					"Type": aMensajes[i].Status,
+					"Message": aMensajes[i].Status === "Error" ? aMensajes[i].Message : FlagReference === "X" ? "The reference has been generated " + aMensajes[i].RefOrder + " with material " + aMensajes[i].SetID : "The order has been generated " + aMensajes[i].OrderCreated + " with material " + aMensajes[i].RefSetMatId + " and plant " + aMensajes[i].Plant
+				});
+			}
 			var mensajes = aMessage;
 
 			for (var i = 0; i < mensajes.length; i++) {
@@ -294,9 +304,9 @@ sap.ui.define([
 					case "success":
 						mensajes[i].Type = "Success";
 						break;
-                    case "Sucess":
-                        mensajes[i].Type = "Success";
-                        break;
+					case "Sucess":
+						mensajes[i].Type = "Success";
+						break;
 					case "warning":
 						mensajes[i].Type = "Warning";
 						break;
